@@ -142,6 +142,72 @@
           background-position-x: -252px;
         }
       }
+
+      .sobre {
+        display: none;
+
+        position: absolute;
+        width: 100%;
+
+        text-align: center;
+        color: #7e928b;
+        font-size: 30px;
+        font-family: Verdana;
+        font-weight: 700;
+
+        background-image: url() no-repeat;
+        
+        opacity: 0;
+        transition: transform 0.5s, opacity 0.5s;
+      }
+
+      .sobre.mostrar {
+        opacity: 1;
+
+        transform: scale(1);
+      }
+
+      .carta {
+        display: none;
+
+        position: absolute;
+        width: 100%;
+
+        text-align: center;
+        color: #7e928b;
+        font-size: 30px;
+        font-family: Verdana;
+        font-weight: 700;
+
+        background-image: url() no-repeat;
+
+        opacity: 0;
+        transition: transform 0.5s, opacity 0.5s;
+      }
+
+      .carta.mostrar {
+        opacity: 1;
+
+        transform: scale(1);
+      }
+
+      .texto {
+        overflow: hidden;
+        border-right: .15em solid orange;
+        white-space: nowrap;
+        width: 0;
+      }
+
+      .texto.animar {
+        animation: escribir 2s steps(40, end);
+      }
+
+      @keyframes escribir {
+        from {width: 0;}
+        to {width: 100%;}
+      }
+
+      
     </style>
   </head>
   <body>
@@ -154,6 +220,12 @@
     </div>
 
     <div class="game-over">GAME OVER</div>
+    
+    <div class="sobre">HAY UN MENSAJE PARA VOS, ABRÍ LA CARTITA</div>
+
+    <div class="carta">
+      <div class="texto">...</div>
+    </div>
   </body>
 
   <script>
@@ -218,15 +290,21 @@
     var textoScore;
     var suelo;
     var gameOver;
+    var sobre;
+    var carta;
+    var texto;
 
     function Start() {
       gameOver = document.querySelector(".game-over");
+      sobre = document.querySelector(".sobre");
+      carta = document.querySelector(".carta");
+      texto = document.querySelector(".texto");
       suelo = document.querySelector(".suelo");
       contenedor = document.querySelector(".contenedor");
       textoScore = document.querySelector(".score");
       pj = document.querySelector(".pj"); 
       document.addEventListener("keydown", HandleKeyDown);
-      contenedor.addEventListener("touchstart", HandleTouch);
+      contenedor.addEventListener("touchstart", HandleTouchSaltar);
     }
 
     function Update() {
@@ -249,7 +327,7 @@
       }
     }
 
-    function HandleTouch(ev)
+    function HandleTouchSaltar(ev)
     {
       Saltar();
     }
@@ -381,6 +459,25 @@
     function GameOver() {
       Estrellarse();
       gameOver.style.display = "block";
+      MostrarSobre();
+    }
+
+    function MostrarSobre() {
+      sobre.style.display = "block";
+      sobre.classList.add("mostrar");
+      sobre.addEventListener("touchstart", HandleTouchSobre);
+    }
+
+    function HandleTouchSobre(ev)
+    {
+      MostrarCarta();
+    }
+
+    function MostrarCarta()
+    {
+      carta.style.display = "block";
+      carta.classList.add("mostrar");
+      texto.classList.add("texto.animar");
     }
 
     function DetectarColision() {
