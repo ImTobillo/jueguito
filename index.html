@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
     <title>jueguito</title>
 
     <style>
@@ -13,7 +14,7 @@
 
       body {
         height: 100vh;
-        background: #584040;
+        background: #FB8BA8;
         display: flex;
         align-items: center;
       }
@@ -161,10 +162,7 @@
     var time = new Date();
     var deltaTime = 0;
 
-    if (
-      document.readyState === "complete" ||
-      document.readyState === "interactive"
-    ) {
+    if (document.readyState === "complete" || document.readyState === "interactive") {
       setTimeout(Init, 1);
     } else {
       document.addEventListener("DOMContentLoaded", Init);
@@ -190,8 +188,8 @@
     var impulso = 900;
     var gravedad = 2500;
 
-    var dinoPosX = 42;
-    var dinoPosY = sueloY;
+    var pjPosX = 42;
+    var pjPosY = sueloY;
 
     var sueloX = 0;
     var velEscenario = 1280 / 3;
@@ -216,7 +214,7 @@
     var velNube = 0.5;
 
     var contenedor;
-    var dino;
+    var pj;
     var textoScore;
     var suelo;
     var gameOver;
@@ -226,14 +224,15 @@
       suelo = document.querySelector(".suelo");
       contenedor = document.querySelector(".contenedor");
       textoScore = document.querySelector(".score");
-      dino = document.querySelector(".pj"); 
+      pj = document.querySelector(".pj"); 
       document.addEventListener("keydown", HandleKeyDown);
+      document.addEventListener("touchstart", HandleKeyDown);
     }
 
     function Update() {
       if (parado) return;
 
-      MoverDinosaurio();
+      MoverPj();
       MoverSuelo();
       DecidirCrearObstaculos();
       DecidirCrearNubes();
@@ -250,27 +249,32 @@
       }
     }
 
+    function HandleTouch(ev)
+    {
+      Saltar();
+    }
+
     function Saltar() {
-      if (dinoPosY === sueloY) {
+      if (pjPosY === sueloY) {
         saltando = true;
         velY = impulso;
-        dino.classList.remove("pj-corriendo");
+        pj.classList.remove("pj-corriendo");
       }
     }
 
-    function MoverDinosaurio() {
-      dinoPosY += velY * deltaTime;
-      if (dinoPosY < sueloY) {
+    function MoverPj() {
+      pjPosY += velY * deltaTime;
+      if (pjPosY < sueloY) {
         TocarSuelo();
       }
-      dino.style.bottom = dinoPosY + "px";
+      pj.style.bottom = pjPosY + "px";
     }
 
     function TocarSuelo() {
-      dinoPosY = sueloY;
+      pjPosY = sueloY;
       velY = 0;
       if (saltando) {
-        dino.classList.add("pj-corriendo");
+        pj.classList.add("pj-corriendo");
       }
       saltando = false;
     }
@@ -285,8 +289,8 @@
     }
 
     function Estrellarse() {
-      dino.classList.remove("pj-corriendo");
-      dino.classList.add("pj-estrellado");
+      pj.classList.remove("pj-corriendo");
+      pj.classList.add("pj-estrellado");
       parado = true;
     }
 
@@ -381,11 +385,11 @@
 
     function DetectarColision() {
       for (var i = 0; i < obstaculos.length; i++) {
-        if (obstaculos[i].posX > dinoPosX + dino.clientWidth) {
+        if (obstaculos[i].posX > pjPosX + pj.clientWidth) {
           //EVADE
           break; //al estar en orden, no puede chocar con más
         } else {
-          if (IsCollision(dino, obstaculos[i], 10, 30, 15, 20)) {
+          if (IsCollision(pj, obstaculos[i], 10, 30, 15, 20)) {
             GameOver();
           }
         }
