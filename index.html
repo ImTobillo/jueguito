@@ -76,8 +76,8 @@
         background-size: 50% 42px;
       }
 
-      .arbolito {
-        width: 46px;
+      .piedra {
+        width: 86px;
         height: 96px;
 
         position: absolute;
@@ -85,7 +85,7 @@
         left: 600px;
         z-index: 1;
 
-        background: url(img/arbolito.png) no-repeat;
+        background: url(img/piedra.png) no-repeat;
       }
       .arbusto {
         width: 98px;
@@ -311,7 +311,7 @@
     function CrearObstaculo() {
       var obstaculo = document.createElement("div");
       contenedor.appendChild(obstaculo);
-      obstaculo.classList.add("arbolito");
+      obstaculo.classList.add("piedra");
       if (Math.random() > 0.5) obstaculo.classList.add("arbusto");
       obstaculo.posX = contenedor.clientWidth;
       obstaculo.style.left = contenedor.clientWidth + "px";
@@ -396,14 +396,7 @@
       }
     }
 
-    function IsCollision(
-      a,
-      b,
-      paddingTop,
-      paddingRight,
-      paddingBottom,
-      paddingLeft
-    ) {
+    function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) {
       var aRect = a.getBoundingClientRect();
       var bRect = b.getBoundingClientRect();
 
