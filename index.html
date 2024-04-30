@@ -147,15 +147,17 @@
         display: none;
 
         position: absolute;
-        width: 100%;
+        width: 10%;
 
+        display: flex;
+        align-items: center;
         text-align: center;
         color: #7e928b;
         font-size: 30px;
         font-family: Verdana;
         font-weight: 700;
 
-        background-image: url() no-repeat;
+        background-image: url(img/sobre.png);
         
         opacity: 0;
         transition: transform 0.5s, opacity 0.5s;
@@ -463,7 +465,7 @@
     }
 
     function MostrarSobre() {
-      sobre.style.display = "block";
+      sobre.style.display = "flex";
       sobre.classList.add("mostrar");
       sobre.addEventListener("touchstart", HandleTouchSobre);
     }
@@ -476,7 +478,7 @@
     function MostrarCarta()
     {
       carta.style.display = "block";
-      carta.classList.add("mostrar");
+      //carta.classList.add("mostrar");
       texto.classList.add("texto.animar");
     }
 
