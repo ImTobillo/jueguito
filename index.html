@@ -144,23 +144,26 @@
       }
 
       .sobre {
-        display: none;
+        display: flex;
 
         position: absolute;
-        width: 10%;
-
-        display: flex;
+        width: 50%;
+        height: 50%;
+  
         align-items: center;
         text-align: center;
-        color: #7e928b;
-        font-size: 30px;
-        font-family: Verdana;
-        font-weight: 700;
 
-        background-image: url(img/sobre.png);
+        font-size: 10px;
+        font-family: Verdana;
+        font-weight: 700; 
+
+        z-index: 15;
+
+        background: url(img/sobre.png) no-repeat 100%;
         
         opacity: 0;
-        transition: transform 0.5s, opacity 0.5s;
+        transform: scale(0);
+        transition: transform 4s, opacity 2s;
       }
 
       .sobre.mostrar {
@@ -173,7 +176,7 @@
         display: none;
 
         position: absolute;
-        width: 100%;
+        /*width: 100%;*/
 
         text-align: center;
         color: #7e928b;
@@ -181,7 +184,7 @@
         font-family: Verdana;
         font-weight: 700;
 
-        background-image: url() no-repeat;
+        background: url(img/carta.png) no-repeat;
 
         opacity: 0;
         transition: transform 0.5s, opacity 0.5s;
@@ -226,7 +229,11 @@
     <div class="sobre">HAY UN MENSAJE PARA VOS, ABRÍ LA CARTITA</div>
 
     <div class="carta">
-      <div class="texto">...</div>
+      <div class="texto">¿Querés ser mi novia?</div>
+      <div>
+        <button>Si</button>
+        <button>No</button>
+      </div>
     </div>
   </body>
 
@@ -461,11 +468,11 @@
     function GameOver() {
       Estrellarse();
       gameOver.style.display = "block";
-      MostrarSobre();
+      setTimeout(MostrarSobre, 2000);
     }
 
     function MostrarSobre() {
-      sobre.style.display = "flex";
+      sobre.style.display = "block";
       sobre.classList.add("mostrar");
       sobre.addEventListener("touchstart", HandleTouchSobre);
     }
@@ -478,7 +485,7 @@
     function MostrarCarta()
     {
       carta.style.display = "block";
-      //carta.classList.add("mostrar");
+      carta.classList.add("mostrar");
       texto.classList.add("texto.animar");
     }
 
