@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <title>jueguito</title>
 
     <style>
@@ -14,7 +15,7 @@
 
       body {
         height: 100vh;
-        background: #FB8BA8;
+        background: #fb8ba8;
         display: flex;
         align-items: center;
       }
@@ -143,8 +144,7 @@
         }
       }
 
-      .mensaje
-      {
+      .mensaje {
         display: flex;
 
         position: absolute;
@@ -152,19 +152,19 @@
         width: 100%;
         height: 50%;
         align-self: center;
-  
+
         align-items: center;
         text-align: center;
 
-        font-size: 10px;
-        font-family: Verdana;
-        font-weight: 700; 
+        font-size: 22px;
+        font-family: sans-serif;
+        font-weight: 700;
 
         z-index: 15;
-        
+
         opacity: 0;
         transform: scale(0);
-        transition: transform 2s, opacity 2s;
+        transition: transform 2s, opacity 5s;
       }
 
       .sobre {
@@ -174,25 +174,26 @@
         width: 100%;
         height: 50%;
         align-self: center;
-  
+
         align-items: center;
         text-align: center;
 
         font-size: 10px;
         font-family: Verdana;
-        font-weight: 700; 
+        font-weight: 700;
 
         z-index: 15;
 
         background: url(img/sobre.png) no-repeat 100%;
         background-position: center center;
-        
+
         opacity: 0;
         transform: scale(0);
         transition: transform 4s, opacity 2s;
       }
 
-      .sobre.mostrar, .carta.mostrar, .mensaje.mostrar {
+      .sobre.mostrar,
+      .mensaje.mostrar {
         opacity: 1;
 
         transform: scale(1);
@@ -202,23 +203,37 @@
         display: none;
 
         position: absolute;
-        /*width: 100%;*/
+        width: 100%;
+        height: 50%;
 
         text-align: center;
         color: #7e928b;
         font-size: 30px;
         font-family: Verdana;
         font-weight: 700;
+        z-index: 20;
 
-        background: url(img/carta.png) no-repeat;
+        background: url(img/carta.png) no-repeat 100%;
+        background-position: center center;
 
-        opacity: 0;
-        transition: transform 0.5s, opacity 0.5s;
+        opacity: 0; /* Inicialmente invisible */
+        animation: deslizar 3s forwards; /* Inicia la animación */
+      }
+
+      @keyframes deslizar {
+        from {
+          top: -50%; /* Posición inicial arriba de la pantalla */
+          opacity: 0; /* Opacidad inicial 0 */
+        }
+        to {
+          top: 21%; /* Posición final en la parte superior de la pantalla */
+          opacity: 1; /* Opacidad final 1 */
+        }
       }
 
       .texto {
         overflow: hidden;
-        border-right: .15em solid orange;
+        border-right: 0.15em solid orange;
         white-space: nowrap;
         width: 0;
       }
@@ -228,11 +243,13 @@
       }
 
       @keyframes escribir {
-        from {width: 0;}
-        to {width: 100%;}
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
       }
-
-      
     </style>
   </head>
   <body>
@@ -245,26 +262,30 @@
     </div>
 
     <div class="game-over">GAME OVER</div>
-    
-    <div class="mensaje">HAY UN MENSAJE PARA VOS, ABRÍ LA CARTITA</div>
+
+    <div class="mensaje">te llegó un mensaje, abrí la cartita</div>
     <div class="sobre"></div>
 
     <div class="carta">
-      <div class="texto">¿Querés ser mi novia?</div>
+      <div class="texto">¿querés ser mi novia?</div>
       <div>
-        <button>Si</button>
-        <button>No</button>
+        <button id="" onclick="" type="button" class="btn btn-danger">Si</button>
+        <button id="botonNo" onclick="desaparecerBoton()" type="button" class="btn btn-danger">No</button>
       </div>
     </div>
   </body>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script>
     //****** GAME LOOP ********//
 
     var time = new Date();
     var deltaTime = 0;
 
-    if (document.readyState === "complete" || document.readyState === "interactive") {
+    if (
+      document.readyState === "complete" ||
+      document.readyState === "interactive"
+    ) {
       setTimeout(Init, 1);
     } else {
       document.addEventListener("DOMContentLoaded", Init);
@@ -323,6 +344,8 @@
     var sobre;
     var carta;
     var texto;
+    var mensaje;
+    var boton;
 
     function Start() {
       gameOver = document.querySelector(".game-over");
@@ -333,7 +356,7 @@
       suelo = document.querySelector(".suelo");
       contenedor = document.querySelector(".contenedor");
       textoScore = document.querySelector(".score");
-      pj = document.querySelector(".pj"); 
+      pj = document.querySelector(".pj");
       document.addEventListener("keydown", HandleKeyDown);
       contenedor.addEventListener("touchstart", HandleTouchSaltar);
     }
@@ -358,8 +381,7 @@
       }
     }
 
-    function HandleTouchSaltar(ev)
-    {
+    function HandleTouchSaltar(ev) {
       Saltar();
     }
 
@@ -487,6 +509,12 @@
       suelo.style.animationDuration = 3 / gameVel + "s";
     }
 
+    function desaparecerBoton()
+    {
+    boton = document.getElementById("botonNo");
+    boton.style.display = "none";
+    }
+
     function GameOver() {
       Estrellarse();
       gameOver.style.display = "block";
@@ -501,14 +529,14 @@
       sobre.addEventListener("touchstart", HandleTouchSobre);
     }
 
-    function HandleTouchSobre(ev)
-    {
+    function HandleTouchSobre(ev) {
       MostrarCarta();
     }
 
-    function MostrarCarta()
-    {
+    function MostrarCarta() {
       carta.style.display = "block";
+      mensaje.style.display = "none";
+      sobre.style.display = "none";
       carta.classList.add("mostrar");
       texto.classList.add("texto.animar");
     }
@@ -526,7 +554,14 @@
       }
     }
 
-    function IsCollision(a, b, paddingTop, paddingRight, paddingBottom, paddingLeft) {
+    function IsCollision(
+      a,
+      b,
+      paddingTop,
+      paddingRight,
+      paddingBottom,
+      paddingLeft
+    ) {
       var aRect = a.getBoundingClientRect();
       var bRect = b.getBoundingClientRect();
 
@@ -538,4 +573,5 @@
       );
     }
   </script>
+  
 </html>
