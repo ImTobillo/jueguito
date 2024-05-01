@@ -147,8 +147,9 @@
         display: flex;
 
         position: absolute;
-        width: 50%;
+        width: 100%;
         height: 50%;
+        align-self: center;
   
         align-items: center;
         text-align: center;
@@ -160,6 +161,7 @@
         z-index: 15;
 
         background: url(img/sobre.png) no-repeat 100%;
+        background-position: center center;
         
         opacity: 0;
         transform: scale(0);
@@ -468,7 +470,8 @@
     function GameOver() {
       Estrellarse();
       gameOver.style.display = "block";
-      setTimeout(MostrarSobre, 2000);
+      //setTimeout(MostrarSobre, 2000);
+      MostrarSobre();
     }
 
     function MostrarSobre() {
