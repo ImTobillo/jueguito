@@ -209,7 +209,13 @@
 
       .botones {
         position: relative;
+
         top: 35%;
+      }
+
+      .button {
+        width: 300%;
+        font-size: 300%;
       }
 
       .carta {
@@ -245,9 +251,9 @@
       }
 
       .eugene {
-        position: relative;
-        top: 15%;
-        left: 12%;
+        position: absolute;
+        top: 50%;
+        left: 46%;
         overflow: hidden;
       }
 
@@ -286,7 +292,9 @@
 
     <div class="carta">
       <div class="botones">
-        <button type="button" onclick="lanzarConfeti()" class="btn btn-danger">Si</button>
+        <button type="button" onclick="lanzarConfeti()" class="btn btn-danger">
+          Si
+        </button>
         <button
           id="botonNo"
           onclick="desaparecerBoton()"
