@@ -248,6 +248,25 @@
         position: relative;
         top: 70%;
         left: 12%;
+        overflow: hidden;
+      }
+
+      .confeti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #f00; /* Color del confeti */
+        border-radius: 50%;
+        animation: caida 3s ease infinite; /* Animación de caída */
+      }
+
+      @keyframes caida {
+        0% {
+          transform: translateY(-100vh) rotate(0deg); /* Inicio fuera de la pantalla y sin rotación */
+        }
+        100% {
+          transform: translateY(100vh) rotate(720deg); /* Fin en la parte inferior de la pantalla y rotación de dos vueltas */
+        }
       }
     </style>
   </head>
@@ -267,7 +286,7 @@
 
     <div class="carta">
       <div class="botones">
-        <button type="button" class="btn btn-danger">Si</button>
+        <button type="button" onclick="lanzarConfeti()" class="btn btn-danger">Si</button>
         <button
           id="botonNo"
           onclick="desaparecerBoton()"
@@ -277,7 +296,7 @@
           No
         </button>
       </div>
-      <img class="eugene" src="img/eugene.jpg">
+      <img class="eugene" src="img/eugene.jpg" />
     </div>
     <div id="contenedor-confeti"></div>
   </body>
@@ -541,6 +560,23 @@
       //mensaje.style.display = "none";
       sobre.classList.add("quitar");
       carta.classList.add("mostrar");
+    }
+
+    function lanzarConfeti() {
+      var contenedor = document.getElementById("contenedor-confeti");
+
+      // Crear confetis
+      for (var i = 0; i < 100; i++) {
+        var confeti = document.createElement("div");
+        confeti.classList.add("confeti");
+        confeti.style.left = Math.random() * window.innerWidth + "px"; // Posición horizontal aleatoria
+        contenedor.appendChild(confeti);
+
+        // Quitar confeti después de la animación
+        setTimeout(() => {
+          confeti.remove();
+        }, 3000);
+      }
     }
 
     function DetectarColision() {
