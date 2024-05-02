@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <title>jueguito</title>
 
@@ -157,7 +162,7 @@
         text-align: center;
 
         font-size: 22px;
-        font-family: sans-serif;
+        font-family: serif;
         font-weight: 700;
 
         z-index: 15;
@@ -178,10 +183,6 @@
         align-items: center;
         text-align: center;
 
-        font-size: 10px;
-        font-family: Verdana;
-        font-weight: 700;
-
         z-index: 15;
 
         background: url(img/sobre.png) no-repeat 100%;
@@ -199,12 +200,24 @@
         transform: scale(1);
       }
 
+      .sobre.quitar {
+        transition: all 0.5s;
+        height: 0; /* Reducir la altura a cero */
+        padding: 0; /* Eliminar el padding */
+        margin: 0; /* Eliminar el margen */
+      }
+
+      .botones {
+        position: relative;
+        top: 35%;
+      }
+
       .carta {
         display: none;
 
         position: absolute;
         width: 100%;
-        height: 50%;
+        height: 60%;
 
         text-align: center;
         color: #7e928b;
@@ -226,29 +239,14 @@
           opacity: 0; /* Opacidad inicial 0 */
         }
         to {
-          top: 21%; /* Posición final en la parte superior de la pantalla */
+          top: 17%; /* Posición final en la parte superior de la pantalla */
           opacity: 1; /* Opacidad final 1 */
         }
       }
 
-      .texto {
-        overflow: hidden;
-        border-right: 0.15em solid orange;
-        white-space: nowrap;
-        width: 0;
-      }
-
-      .texto.animar {
-        animation: escribir 2s steps(40, end);
-      }
-
-      @keyframes escribir {
-        from {
-          width: 0;
-        }
-        to {
-          width: 100%;
-        }
+      .eugene {
+        position: relative;
+        top: 40%;
       }
     </style>
   </head>
@@ -267,15 +265,22 @@
     <div class="sobre"></div>
 
     <div class="carta">
-      <div class="texto">¿querés ser mi novia?</div>
-      <div>
-        <button id="" onclick="" type="button" class="btn btn-danger">Si</button>
-        <button id="botonNo" onclick="desaparecerBoton()" type="button" class="btn btn-danger">No</button>
+      <div class="botones">
+        <button type="button" class="btn btn-danger">Si</button>
+        <button
+          id="botonNo"
+          onclick="desaparecerBoton()"
+          type="button"
+          class="btn btn-danger"
+        >
+          No
+        </button>
       </div>
+      <img class="eugene" src="img/eugene.jpg">
     </div>
+    <div id="contenedor-confeti"></div>
   </body>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script>
     //****** GAME LOOP ********//
 
@@ -343,7 +348,6 @@
     var gameOver;
     var sobre;
     var carta;
-    var texto;
     var mensaje;
     var boton;
 
@@ -352,7 +356,6 @@
       sobre = document.querySelector(".sobre");
       carta = document.querySelector(".carta");
       mensaje = document.querySelector(".mensaje");
-      texto = document.querySelector(".texto");
       suelo = document.querySelector(".suelo");
       contenedor = document.querySelector(".contenedor");
       textoScore = document.querySelector(".score");
@@ -509,10 +512,9 @@
       suelo.style.animationDuration = 3 / gameVel + "s";
     }
 
-    function desaparecerBoton()
-    {
-    boton = document.getElementById("botonNo");
-    boton.style.display = "none";
+    function desaparecerBoton() {
+      boton = document.getElementById("botonNo");
+      boton.style.display = "none";
     }
 
     function GameOver() {
@@ -535,10 +537,9 @@
 
     function MostrarCarta() {
       carta.style.display = "block";
-      mensaje.style.display = "none";
-      sobre.style.display = "none";
+      //mensaje.style.display = "none";
+      sobre.classList.add("quitar");
       carta.classList.add("mostrar");
-      texto.classList.add("texto.animar");
     }
 
     function DetectarColision() {
@@ -573,5 +574,10 @@
       );
     }
   </script>
-  
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
 </html>
