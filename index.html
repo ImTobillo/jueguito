@@ -554,7 +554,6 @@
     function MostrarSobre() {
       sobre.style.display = "block";
       mensaje.style.display = "block";
-      gameOver.style.display = "none";
       sobre.classList.add("mostrar");
       mensaje.classList.add("mostrar");
       sobre.addEventListener("touchstart", HandleTouchSobre);
@@ -568,6 +567,7 @@
       carta.style.display = "block";
       mensaje.style.display = "none";
       sobre.classList.add("quitar");
+      gameOver.style.display = "none";
       carta.classList.add("mostrar");
     }
 
